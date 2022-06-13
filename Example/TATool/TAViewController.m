@@ -7,6 +7,8 @@
 //
 
 #import "TAViewController.h"
+#import <ThinkingSDK/ThinkingAnalyticsSDK.h>
+#import <TATool/TALoggerManager.h>
 
 @interface TAViewController ()
 
@@ -18,6 +20,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    [ThinkingAnalyticsSDK setLogLevel:TDLoggingLevelDebug];
+    [ThinkingAnalyticsSDK startWithAppId:@"asda" withUrl:@"www.bai.com"];
+    [[ThinkingAnalyticsSDK sharedInstance] track:@"test"];
+    
 }
 
 - (void)didReceiveMemoryWarning

@@ -58,18 +58,24 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
-    UIView *header;
-    header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, UIScreen.mainScreen.bounds.size.width, 44)];
-    UILabel *lable1 = [[UILabel alloc] initWithFrame:CGRectMake(44, 0,UIScreen.mainScreen.bounds.size.width, 44)];
-    lable1.text = @"时间";
-    lable1.font = [UIFont boldSystemFontOfSize:12];
-    UILabel *lable2 = [[UILabel alloc] initWithFrame:CGRectMake(UIScreen.mainScreen.bounds.size.width - 100, 0,UIScreen.mainScreen.bounds.size.width, 44)];
-    lable2.text = @"日志";
-    lable2.font = [UIFont boldSystemFontOfSize:12];
-    [header addSubview:lable1];
-    [header addSubview:lable2];
-    header.backgroundColor = [UIColor whiteColor];
-    return header;
+    
+    UIToolbar *bar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, UIScreen.mainScreen.bounds.size.width, 44)];
+    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithTitle:@"\t时间" style:UIBarButtonItemStyleDone target:self action:nil];
+    UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithTitle:@"\t\t\t\t日志" style:UIBarButtonItemStyleDone target:self action:nil];
+    [bar setItems:@[item1, item2]];
+    return  bar;
+//    UIView *header;
+//    header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, UIScreen.mainScreen.bounds.size.width, 44)];
+//    UILabel *lable1 = [[UILabel alloc] initWithFrame:CGRectMake(44, 0,UIScreen.mainScreen.bounds.size.width, 44)];
+//    lable1.text = @"时间";
+//    lable1.font = [UIFont boldSystemFontOfSize:12];
+//    UILabel *lable2 = [[UILabel alloc] initWithFrame:CGRectMake(UIScreen.mainScreen.bounds.size.width - 100, 0,UIScreen.mainScreen.bounds.size.width, 44)];
+//    lable2.text = @"日志";
+//    lable2.font = [UIFont boldSystemFontOfSize:12];
+//    [header addSubview:lable1];
+//    [header addSubview:lable2];
+//    header.backgroundColor = [UIColor whiteColor];
+//    return header;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

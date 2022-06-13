@@ -3,8 +3,9 @@ use_frameworks!
 platform :ios, '9.0'
 
 target 'TATool_Example' do
-  pod 'TATool', :path => '../'
-
+  pod 'TATool', :path => '../', :configurations => ['Debug']
+  pod 'ThinkingSDK'
+  
   target 'TATool_Tests' do
     inherit! :search_paths
 

@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSArray *)search;
 
++ (void)show;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -10,8 +10,15 @@
 #import "Aspects.h"
 #import "FMDB.h"
 #import "TALoggerController.h"
+#import <CoreMotion/CoreMotion.h>
 
 FMDatabase *__ta_db;
+
+@interface TALoggerManager ()
+
+@property (strong,nonatomic) CMMotionManager *motionManager;
+
+@end
 
 @implementation TALoggerManager
 
@@ -80,6 +87,8 @@ FMDatabase *__ta_db;
 
 + (void)load {
     
+    [self share];
+    
     [self createDataBase];
     [self executeMuchSql];
     
@@ -93,13 +102,61 @@ FMDatabase *__ta_db;
         [self write:message type:type];
         
     } error:NULL];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        TALoggerController *vc = [[TALoggerController alloc] init];
-        vc.title = @"logger";
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-        [UIApplication.sharedApplication.keyWindow.rootViewController presentViewController:nav animated:YES completion:nil];
+ 
+}
+
++ (instancetype)share {
+    static dispatch_once_t onceToken;
+    static TALoggerManager *manager;
+    dispatch_once(&onceToken, ^{
+        manager = [TALoggerManager new];
     });
+    return manager;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.motionManager = [[CMMotionManager alloc] init];//一般在viewDidLoad中进行
+        self.motionManager.accelerometerUpdateInterval = .1;//加速仪更新频率，以秒为单位
+        [self startAccelerometer];
+    }
+    return self;
+}
+
+-(void)startAccelerometer
+{
+  //以push的方式更新并在block中接收加速度
+  [self.motionManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc]init]
+     withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
+      [self outputAccelertionData:accelerometerData.acceleration];
+  }];
+}
+-(void)outputAccelertionData:(CMAcceleration)acceleration
+{
+  //综合3个方向的加速度
+  double accelerameter =sqrt( pow( acceleration.x , 2 ) + pow( acceleration.y , 2 )
+     + pow( acceleration.z , 2) );
+  //当综合加速度大于2.3时，就激活效果（此数值根据需求可以调整，数据越小，用户摇动的动作就越小，越容易激活，反之加大难度，但不容易误触发）
+  if (accelerameter>4.f) {
+ //立即停止更新加速仪（很重要！）
+//    [self.motionManager stopAccelerometerUpdates];
+     
+      dispatch_async(dispatch_get_main_queue(), ^{
+          [[self class] show];
+      });
+  }
+    
+    
+    
+}
+
++ (void)show {
+    TALoggerController *vc = [[TALoggerController alloc] init];
+    vc.title = @"logger";
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    [UIApplication.sharedApplication.keyWindow.rootViewController presentViewController:nav animated:YES completion:nil];
 }
 
 @end
