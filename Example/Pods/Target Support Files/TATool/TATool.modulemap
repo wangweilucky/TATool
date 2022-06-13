@@ -1,0 +1,6 @@
+framework module TATool {
+  umbrella header "TATool-umbrella.h"
+
+  export *
+  module * { export * }
+}

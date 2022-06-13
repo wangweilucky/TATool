@@ -1,0 +1,37 @@
+PODS:
+  - Aspects (1.4.1)
+  - FBSnapshotTestCase (2.1.4):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
+  - FBSnapshotTestCase/Core (2.1.4)
+  - FBSnapshotTestCase/SwiftSupport (2.1.4):
+    - FBSnapshotTestCase/Core
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - TATool (0.1.0):
+    - Aspects
+    - FMDB
+
+DEPENDENCIES:
+  - FBSnapshotTestCase
+  - TATool (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - Aspects
+    - FBSnapshotTestCase
+    - FMDB
+
+EXTERNAL SOURCES:
+  TATool:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Aspects: 7595ba96a6727a58ebcbfc954497fc5d2fdde546
+  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  TATool: 46f690112d3e2f0d840624fc1c9b85723acd82cf
+
+PODFILE CHECKSUM: 77d7fcd8b75c64a029e2362d9fe3f9222efc1123
+
+COCOAPODS: 1.11.0
